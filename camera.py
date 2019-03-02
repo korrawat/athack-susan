@@ -49,7 +49,6 @@ class Camera:
             # change image every 1 second:
             img_idx = timediff % len(self.debug_images)
             myimg = self.debug_images[img_idx]
-            print(type(myimg))
             assert np.all(myimg <= 255) and np.all(myimg >= 0), "Values outside 0-255 detected in image"
             return myimg
         else:
@@ -57,6 +56,7 @@ class Camera:
             return frame
 
     def snapshot_JPEG(self):
+            frame = self.snapshot()
             ret, jpeg = cv2.imencode('.jpg', frame)
             return jpeg.tobytes()
 
