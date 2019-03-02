@@ -57,6 +57,7 @@ class Camera:
             return frame
 
     def snapshot_JPEG(self):
+            frame = self.snapshot()
             ret, jpeg = cv2.imencode('.jpg', frame)
             return jpeg.tobytes()
 
