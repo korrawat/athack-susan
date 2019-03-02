@@ -1,17 +1,18 @@
 import cv2
 import numpy as np
+from camera import Camera
 from processor_properties import ProcessorProperties
 
 
-# class ImageStream:
-#     def __init__(self, camera, properties):
-#         ''' properties is a dictionary of properties '''
-#         self.camera = camera
-#         self.properties = properties
+class ProcessedStream:
+    def __init__(self, camera, properties):
+        ''' properties is a dictionary of properties '''
+        self.camera = camera
+        self.properties = properties
 
 
-#     def read(self):
-#         pass
+    def read(self):
+        return process_image(self.camera.snapshot(), self.properties)
 
 
 def brightness(image, factor):
