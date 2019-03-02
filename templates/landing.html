@@ -135,8 +135,8 @@
             <h1> Team Susan</h1>
         </div>
         <br>
-        <div class="container">
-            <div class="navigation-menu" style="left: 0px;">
+        <div class="container" style="margin: 10px">
+            <div class="navigation-menu" style="padding: 10px;">
                 <div class="row">
                     <h2> Tools</h2>
                 </div>
@@ -166,7 +166,7 @@
 
                 </div>
             </div>
-            <div class="main-content">
+            <div class="main-content" style="padding: 10px;">
                 <div class="row" style="text-align: center; padding-left: 20px">
                     <div class="col" id="recorder">
                         <div class="row">
@@ -181,7 +181,9 @@
                         </div>
                         <script type="text/javascript" src="{{ url_for('static', filename='recorder.js', version='12052017') }}"></script>
                     </div>
+
                 </div>
+                <br>
                 <div>
                     <img id="video" src="{{ url_for('video_viewer') }}" style="max-width: 100%;">
 
