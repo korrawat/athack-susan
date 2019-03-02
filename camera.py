@@ -56,6 +56,10 @@ class Camera:
             ret, frame = self.cap.read()
             return frame
 
+    def snapshot_JPEG(self):
+            ret, jpeg = cv2.imencode('.jpg', frame)
+            return jpeg.tobytes()
+
 
 class RecordingThread (threading.Thread):
     def __init__(self, name, camera):
