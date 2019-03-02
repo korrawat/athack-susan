@@ -16,6 +16,19 @@ class ProcessedStream:
         return self.camera.snapshot(),\
             process_image(self.camera.snapshot(), self.properties)
 
+def scale(image, scaling_factor):
+    # better but slower option: interpolation=cv2.INTER_CUBIC
+    height, width, _ = np.shape(image)
+    new_height = int(1.0 * height / scaling_factor)
+    new_width = int(1.0 * width / scaling_factor)
+    start_y = (height - new_height) / 2
+    start_x = (width - new_width) / 2
+    cropped = image[start_y: start_y + new_height, start_x: start_x + new_width, :]
+    zoomed = cv2.resize(cropped, (0,0), fx=scaling_factor, fy=scaling_factor,\
+        interpolation=cv2.INTER_CUBIC)
+    return zoomed
+
+
 
 def brightness(image, factor):
     # if use `image * factor`, need to cast to int
@@ -40,6 +53,8 @@ def grayscale(image):
 
 def process_image(image, properties):
     out = np.copy(image)
+    if properties.scaling_factor.value > 1.0:
+        out = scale(out, properties.scaling_factor.value)
     out = brightness(out, properties.brightness_factor.value)
     out = contrast(out, properties.contrast_factor.value)
     if properties.grayscale.value:
