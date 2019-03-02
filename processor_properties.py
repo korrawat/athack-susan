@@ -17,6 +17,7 @@ class ProcessorProperty:
 
 class ProcessorProperties:
     def __init__(self):
+        self.scaling_factor = ProcessorProperty("Zoom", 1.0, 1.0, 3.0)
         self.brightness_factor = ProcessorProperty("Brightness", 1.0, 0.5, 2.0)
         self.contrast_factor = ProcessorProperty("Contrast", 1.0, 0.5, 2.0)
         self.grayscale = ProcessorProperty("Grayscale", False)

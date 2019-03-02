@@ -23,6 +23,7 @@ if __name__ == '__main__':
         frame = camera.snapshot()
         props = ProcessorProperties()
         # props.brightness_factor.update(1.5)
-        props.contrast_factor.update(1.5)
+        # props.contrast_factor.update(1.5)
+        props.scaling_factor.update(3.0)
         frame = process_image(frame, props)
         cv2.imshow('image', frame)
