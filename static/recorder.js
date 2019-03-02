@@ -1,8 +1,23 @@
 var buttonRecord = document.getElementById("record");
-console.log(buttonRecord.status)
 var buttonStop = document.getElementById("stop");
+var buttonCapture = document.getElementById("capture");
 
 buttonStop.disabled = true;
+
+buttonCapture.onclick = function() {
+    console.log("capture clciked");
+
+    // XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            // alert(xhr.responseText);
+        }
+    }
+    xhr.open("POST", "/capture_status");
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.send(JSON.stringify({ status: "true" }));
+}
 
 buttonRecord.onclick = function() {
     // var url = window.location.href + "record_status";

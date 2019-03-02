@@ -1,15 +1,37 @@
 from flask import Flask, render_template, Response, jsonify, request
+import os
+import datetime
 
 from camera import VideoCamera
+import cv2
+from PIL import Image
 
 app = Flask(__name__)
 
 video_camera = None
 global_frame = None
+counter = 1
 
 @app.route('/')
 def index():
     return render_template('landing.html')
+
+@app.route('/capture_status', methods=['POST'])
+def capture_status():
+    global video_camera 
+    if video_camera == None:
+        video_camera = VideoCamera()
+    json = request.get_json()
+
+    status = json['status']
+
+    if status == "true":
+        frame = video_camera.get_image()
+        cv2.imwrite(os.path.join('img', 'capture' + str(datetime.datetime.now()) + '.jpg'), frame)
+
+    print('capture', status)
+
+    return jsonify(result="captured")
 
 @app.route('/record_status', methods=['POST'])
 def record_status():
