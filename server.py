@@ -4,13 +4,14 @@ import datetime
 
 from camera import VideoCamera
 import cv2
-from PIL import Image
 
 app = Flask(__name__)
 
 video_camera = None
 global_frame = None
 counter = 1
+
+captured_img_dir = 'static/img'
 
 @app.route('/')
 def index():
@@ -27,7 +28,7 @@ def capture_status():
 
     if status == "true":
         frame = video_camera.get_image()
-        cv2.imwrite(os.path.join('img', 'capture' + str(datetime.datetime.now()) + '.jpg'), frame)
+        cv2.imwrite(os.path.join(captured_img_dir, 'capture' + str(datetime.datetime.now()) + '.jpg'), frame)
 
     print('capture', status)
 
@@ -72,6 +73,15 @@ def video_stream():
 def video_viewer():
     return Response(video_stream(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/images_list')
+def images_list():
+    working_dir = os.getcwd()
+    full_paths = [os.path.join(working_dir, captured_img_dir, image_file) \
+        for image_file in os.listdir(captured_img_dir)]
+    print full_paths
+    return full_paths
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True)
