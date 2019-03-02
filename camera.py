@@ -1,5 +1,61 @@
 import cv2
 import threading
+import glob
+import os
+import time
+import numpy as np
+
+class CameraFinder:
+    def __iter__(self):
+        self.i = -1
+        return self
+
+    def next(self):
+        self.i += 1
+        cap = cv2.VideoCapture(self.i)
+        ret, frame = cap.read()
+        cap.release()
+        if ret:
+            return self.i
+        else:
+            raise StopIteration
+
+class Camera:
+    def __init__(self, debug=False):
+        self.debug = debug
+        if not debug:
+            self.cameraList = [i for i in CameraFinder()]
+            assert len(self.cameraList) > 0, "No eligible cameras found!"
+            #self.cap = cv2.VideoCapture(self.currentCamera)
+            self.cap = None
+            self.setCamera(self.cameraList[0])
+            print "Successfully found and opened camera."
+        else:
+            self.cameraList = [0, 1]
+            self.currentCamera = 0
+            self.debug_img_paths = glob.glob(os.path.join(os.path.abspath("."),'static','img','training_data','*'))
+            self.debug_images = [cv2.imread(_) for _ in self.debug_img_paths]
+            self.starttime = time.time()
+
+    def setCamera(self, cameraIndex):
+        self.currentCamera = cameraIndex
+        if self.cap is not None:
+            self.cap.release()
+        self.cap = cv2.VideoCapture(self.currentCamera)
+
+    def snapshot(self):
+        if self.debug:
+            timediff = int(np.floor(time.time() - self.starttime))
+            # change image every 1 second:
+            img_idx = timediff % len(self.debug_images)
+            myimg = self.debug_images[img_idx]
+            print(type(myimg))
+            assert np.all(myimg <= 255) and np.all(myimg >= 0), "Values outside 0-255 detected in image"
+            return myimg
+        else:
+            ret, frame = self.cap.read()
+            return frame
+
 
 class RecordingThread (threading.Thread):
     def __init__(self, name, camera):
