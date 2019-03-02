@@ -1,17 +1,15 @@
 from flask import Flask, render_template, Response, jsonify, request
-from flask_bootstrap import Bootstrap
 
 from camera import VideoCamera
 
 app = Flask(__name__)
-Bootstrap(app)
 
 video_camera = None
 global_frame = None
 
 @app.route('/')
 def index():
-    return render_template('main.html')
+    return render_template('landing.html')
 
 @app.route('/record_status', methods=['POST'])
 def record_status():

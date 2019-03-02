@@ -1,4 +1,5 @@
 var buttonRecord = document.getElementById("record");
+console.log(buttonRecord.status)
 var buttonStop = document.getElementById("stop");
 
 buttonStop.disabled = true;

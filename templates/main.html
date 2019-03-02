@@ -5,23 +5,43 @@
     <title>Team Susan</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="../static/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="../static/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/css/util.css">
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/css/main.css?q=1280549780">
 
     <style>
+        h5 {
+            font-weight: bold;
+        }
+        
         .module-button {
             background: black;
             color: white;
             font-size: 20px;
         }
         
-        .module-button:hover {
+        .module-button:hover,
+        .increment:hover {
             background-color: orange;
         }
         
-        .recording {
+        .recording,
+        .increment {
             width: 25px;
             height: 25px;
             background: #ff0000;
@@ -41,27 +61,92 @@
             margin: 5px;
             display: none;
         }
+        
+        .increment,
+        .tools-box {
+            background: #000000;
+            display: block;
+            color: white;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .tools-box {
+            background: white;
+            color: black;
+            text-align: center;
+            font-size: 30px;
+            font-weight: bold;
+            /* padding: 10px; */
+            margin: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="bg-contact100">
-        <div class="row" style="text-align: center">
-            <div class="col col-lg-3">
-                <h1>Team Susan</h1>
-            </div>
-            <div class="col col-lg-6" id="recorder">
-                <div class="row">
-                    <button class="recording" id="recording"> </button>
-                    <button id="record" class="module-button">Record</button>
-                    <button id="stop" class="module-button">Stop</button>
-                    <p id="download"> </p>
-                    <a class="module-button" href="./static/video.avi" download>Download</a>
+    <div style="text-align: center">
+        <h1> Team Susan</h1>
+    </div>
+    <div class="bg-contact100" style="padding: 30px;">
+        <div class="row">
+            <div class="container">
+                <div class="col col-md-2">
+                    <div class="row">
+                        <h2> Tools</h2>
+                    </div>
+                    <br>
+                    <div id="tools" style="align-content: center">
+                        <h4> Contrast</h4>
+                        <div class="row">
+                            <button class="increment" id="ct-down">-</button>
+                            <a class="tools-box" id="ct-txt"> 1</a>
+                            <button class="increment" id="ct-up">+</button>
+                        </div>
+                        <br>
+                        <h4> Brightness</h4>
+                        <div class="row">
+                            <button class="increment" id="bg-down">-</button>
+                            <a class="tools-box" id="bg-txt"> 1</a>
+                            <button class="increment" id="bg-up">+</button>
+                        </div>
+                        <br>
+                        <h4> Zoom</h4>
+                        <div class="row">
+                            <button class="increment" id="zm-down">-</button>
+                            <a class="tools-box" id="zm-txt"> 1</a>
+                            <button class="increment" id="zm-up">+</button>
+                        </div>
+
+                    </div>
                 </div>
-                <script type="text/javascript" src="{{ url_for('static', filename='recorder.js', version='12052017') }}"></script>
+            </div>
+
+            <div class="col col-md-8">
+                <div class="row" style="text-align: center; padding-left: 20px">
+                    <div class="col" id="recorder">
+                        <div class="row">
+                            <button id="record" class="module-button">Record</button>
+                            <button id="stop" class="module-button">Stop</button>
+                            <button id="capture" class="module-button">Capture</button>
+                            <p id="download"> </p>
+                            <a style="color: white" class="module-button" href="./static/video.avi" download>Download</a>
+                            <button class="recording" id="recording"> </button>
+                        </div>
+                        <script type="text/javascript" src="{{ url_for('static', filename='recorder.js', version='12052017') }}"></script>
+                    </div>
+                </div>
+                <div>
+                    <img id="video" src="{{ url_for('video_viewer') }}" style="max-width: 100%;">
+
+                </div>
+            </div>
+            <div class="col col-md-2">
+                <div class="row">
+                    <h2> Images</h2>
+                </div>
+                <br>
+
             </div>
         </div>
-
-        <img id="video" src="{{ url_for('video_viewer') }}">
     </div>
 </body>
