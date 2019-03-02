@@ -12,7 +12,9 @@ class ProcessedStream:
 
 
     def read(self):
-        return process_image(self.camera.snapshot(), self.properties)
+        ''' returns a tuple of original and processed images '''
+        return self.camera.snapshot(),\
+            process_image(self.camera.snapshot(), self.properties)
 
 
 def brightness(image, factor):
