@@ -28,7 +28,7 @@ class Camera:
             assert len(self.cameraList) > 0, "No eligible cameras found!"
             #self.cap = cv2.VideoCapture(self.currentCamera)
             self.cap = None
-            self.setCamera(self.cameraList[0])
+            self.setCamera(0)
             print "Successfully found and opened camera."
         else:
             self.cameraList = [0, 1]
