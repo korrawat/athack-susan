@@ -46,7 +46,7 @@ def grayscale(image):
     return np.stack((gray_img,)*3, axis=-1)
 
 
-def threshold(image, blocksize=15, C=5):
+def threshold(image, blocksize=11, C=5):
     # https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html?highlight=adaptivethreshold#cv2.adaptiveThreshold
     grayscale = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
     output = cv2.adaptiveThreshold(grayscale, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, \
@@ -68,5 +68,5 @@ def process_image(image, properties):
         out = contrast(out, properties.contrast_factor.value)
     if properties.grayscale.value:
         out = grayscale(out)
-    out = threshold(image)
+    # out = threshold(image)
     return out

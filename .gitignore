@@ -109,3 +109,8 @@ local/
 
 # ML model
 frozen_east_text_detection.pb
+
+.DS_Store
+
+# Google Cloud API key
+My-Project-93865-17933d6e0c4b.json

@@ -182,5 +182,9 @@ for ((startX, startY, endX, endY), text) in results:
         cv2.FONT_HERSHEY_SIMPLEX, new_scale, (0, 0, 255), thickness)
 
 # show the output image
-cv2.imshow("Text Detection", cv2.resize(output, None, fx=0.5, fy=0.5))
+# cv2.imshow("Text Detection", cv2.resize(output, None, fx=0.5, fy=0.5))
+cv2.imshow("Text Detection", output)
+image_path = args["image"] + "-new.jpg"
+cv2.imwrite(image_path, output)
+print "save %s" % image_path
 cv2.waitKey(0)
