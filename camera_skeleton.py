@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+from image_processor import process_image
+from processor_properties import ProcessorProperties
 
 
 class Camera:
@@ -19,4 +21,8 @@ if __name__ == '__main__':
         if k == 27:
             break
         frame = camera.snapshot()
+        props = ProcessorProperties()
+        # props.brightness_factor.update(1.5)
+        props.contrast_factor.update(1.5)
+        frame = process_image(frame, props)
         cv2.imshow('image', frame)
