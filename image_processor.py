@@ -29,7 +29,6 @@ def scale(image, scaling_factor):
     return zoomed
 
 
-
 def brightness(image, factor):
     # if use `image * factor`, need to cast to int
     # return image * factor
@@ -47,6 +46,14 @@ def grayscale(image):
     return np.stack((gray_img,)*3, axis=-1)
 
 
+def threshold(image, blocksize=15, C=5):
+    # https://docs.opencv.org/2.4/modules/imgproc/doc/miscellaneous_transformations.html?highlight=adaptivethreshold#cv2.adaptiveThreshold
+    grayscale = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+    output = cv2.adaptiveThreshold(grayscale, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, \
+            cv2.THRESH_BINARY, blocksize, C)
+    return np.stack((output,)*3, axis=-1)
+
+
 # TODO
 # - contrast increases noise! maybe add bilateral filter (slow)?
 # - gamma correction?
@@ -55,8 +62,11 @@ def process_image(image, properties):
     out = np.copy(image)
     if properties.scaling_factor.value > 1.0:
         out = scale(out, properties.scaling_factor.value)
-    out = brightness(out, properties.brightness_factor.value)
-    out = contrast(out, properties.contrast_factor.value)
+    if properties.brightness_factor.value != 1.0:
+        out = brightness(out, properties.brightness_factor.value)
+    if properties.contrast_factor.value != 1.0:
+        out = contrast(out, properties.contrast_factor.value)
     if properties.grayscale.value:
         out = grayscale(out)
+    out = threshold(image)
     return out
