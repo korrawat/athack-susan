@@ -13,6 +13,8 @@ buttonRecord.onclick = function() {
     downloadLink.text = "";
     downloadLink.href = "";
 
+    document.getElementById("recording").style.display = "block"
+
     // XMLHttpRequest
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -29,6 +31,9 @@ buttonStop.onclick = function() {
     buttonRecord.disabled = false;
     buttonStop.disabled = true;
 
+    document.getElementById("recording").style.display = "none";
+
+
     // XMLHttpRequest
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -44,4 +49,4 @@ buttonStop.onclick = function() {
     xhr.open("POST", "/record_status");
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify({ status: "false" }));
-};
+}
