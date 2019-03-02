@@ -7,14 +7,17 @@ class RecordingThread (threading.Thread):
         self.name = name
         self.isRunning = True
 
-        self.cap = camera
+        self.cap = camera        
+        width = int(self.cap.get(3))
+        height = int(self.cap.get(4))
         fourcc = cv2.VideoWriter_fourcc(*'MJPG')
-        self.out = cv2.VideoWriter('./static/video.avi',fourcc, 20.0, (640,480))
+        self.out = cv2.VideoWriter('./static/video.avi',fourcc, 20.0, (width, height))
 
     def run(self):
         while self.isRunning:
             ret, frame = self.cap.read()
             if ret:
+                # frame = cv2.flip(frame,0)
                 self.out.write(frame)
 
         self.out.release()

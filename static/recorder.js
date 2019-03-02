@@ -7,7 +7,7 @@ buttonRecord.onclick = function() {
     // var url = window.location.href + "record_status";
     buttonRecord.disabled = true;
     buttonStop.disabled = false;
-    
+
     // disable download link
     var downloadLink = document.getElementById("download");
     downloadLink.text = "";
@@ -27,7 +27,7 @@ buttonRecord.onclick = function() {
 
 buttonStop.onclick = function() {
     buttonRecord.disabled = false;
-    buttonStop.disabled = true;    
+    buttonStop.disabled = true;
 
     // XMLHttpRequest
     var xhr = new XMLHttpRequest();
@@ -37,12 +37,11 @@ buttonStop.onclick = function() {
 
             // enable download link
             var downloadLink = document.getElementById("download");
-            downloadLink.text = "Download Video";
-            downloadLink.href = "/static/video.avi";
+            downloadLink.text = "Finished Recording";
+            // downloadLink.href = "./static/video.avi";
         }
     }
     xhr.open("POST", "/record_status");
     xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhr.send(JSON.stringify({ status: "false" }));
 };
-
