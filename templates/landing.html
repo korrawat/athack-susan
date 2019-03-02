@@ -5,34 +5,62 @@
     <title>Team Susan</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="../static/images/icons/favicon.ico" />
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/vendor/bootstrap/css/bootstrap.min.css">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/animate/animate.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/css-hamburgers/hamburgers.min.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href="../static/vendor/select2/select2.min.css">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/css/util.css">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="../static/css/main.css?q=1280549780">
 
     <style>
+        .container {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+        }
+        
+        .header {
+            grid-column: span 12;
+        }
+        
+        .navigation-menu {
+            grid-column: span 2;
+        }
+        
+        .main-content {
+            grid-column: span 8;
+        }
+        
+        .footer {
+            grid-column: span 12;
+        }
+        
         h5 {
             font-weight: bold;
         }
         
+        a {
+            text-decoration: none;
+        }
+        
         .module-button {
-            background: black;
+            width: 150px;
+            height: 50px;
+            background: #000000;
+            border-radius: 25px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 25px;
+            -webkit-transition: all 0.4s;
+            -o-transition: all 0.4s;
+            -moz-transition: all 0.4s;
+            transition: all 0.4s;
+            margin: 5px;
             color: white;
             font-size: 20px;
+            font-family: Montserrat-Regular;
         }
         
         .module-button:hover,
@@ -80,73 +108,90 @@
             /* padding: 10px; */
             margin: 10px;
         }
+        
+        .tool-column {
+            float: left;
+            width: 33%;
+        }
+        /* Clear floats after the columns */
+        
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        
+        .button-col {
+            float: left;
+            width: 20%;
+        }
     </style>
+
 </head>
 
 <body>
-    <div style="text-align: center">
-        <h1> Team Susan</h1>
-    </div>
-    <div class="bg-contact100" style="padding: 30px;">
-        <div class="row">
-            <div class="container">
-                <div class="col col-md-2">
+    <div style="padding: 10px;">
+        <div style="text-align: center">
+            <h1> Team Susan</h1>
+        </div>
+        <br>
+        <div class="container" style="margin: 10px">
+            <div class="navigation-menu" style="padding: 10px;">
+                <div class="row">
+                    <h2> Tools</h2>
+                </div>
+                <br>
+
+                <div id="tools" style="align-content: center">
+                    <h4> Contrast</h4>
                     <div class="row">
-                        <h2> Tools</h2>
+                        <div class="tool-column"> <button class="increment" id="ct-down">-</button> </div>
+                        <div class="tool-column"><a class="tools-box" id="ct-txt"> 1</a></div>
+                        <div class="tool-column"><button class="increment" id="ct-up">+</button></div>
                     </div>
                     <br>
-                    <div id="tools" style="align-content: center">
-                        <h4> Contrast</h4>
-                        <div class="row">
-                            <button class="increment" id="ct-down">-</button>
-                            <a class="tools-box" id="ct-txt"> 1</a>
-                            <button class="increment" id="ct-up">+</button>
-                        </div>
-                        <br>
-                        <h4> Brightness</h4>
-                        <div class="row">
-                            <button class="increment" id="bg-down">-</button>
-                            <a class="tools-box" id="bg-txt"> 1</a>
-                            <button class="increment" id="bg-up">+</button>
-                        </div>
-                        <br>
-                        <h4> Zoom</h4>
-                        <div class="row">
-                            <button class="increment" id="zm-down">-</button>
-                            <a class="tools-box" id="zm-txt"> 1</a>
-                            <button class="increment" id="zm-up">+</button>
-                        </div>
-
+                    <h4> Brightness</h4>
+                    <div class="row">
+                        <div class="tool-column"> <button class="increment" id="bg-down">-</button> </div>
+                        <div class="tool-column"><a class="tools-box" id="bg-txt"> 1</a></div>
+                        <div class="tool-column"><button class="increment" id="bg-up">+</button></div>
                     </div>
+                    <br>
+                    <h4> Zoom</h4>
+                    <div class="row">
+                        <div class="tool-column"> <button class="increment" id="zm-down">-</button> </div>
+                        <div class="tool-column"><a class="tools-box" id="zm-txt"> 1</a></div>
+                        <div class="tool-column"><button class="increment" id="zm-up">+</button></div>
+                    </div>
+
                 </div>
             </div>
-
-            <div class="col col-md-8">
+            <div class="main-content" style="padding: 10px;">
                 <div class="row" style="text-align: center; padding-left: 20px">
                     <div class="col" id="recorder">
                         <div class="row">
+
                             <button id="record" class="module-button">Record</button>
                             <button id="stop" class="module-button">Stop</button>
                             <button id="capture" class="module-button">Capture</button>
                             <p id="download"> </p>
                             <a style="color: white" class="module-button" href="./static/video.avi" download>Download</a>
                             <button class="recording" id="recording"> </button>
+
                         </div>
                         <script type="text/javascript" src="{{ url_for('static', filename='recorder.js', version='12052017') }}"></script>
                     </div>
+
                 </div>
+                <br>
                 <div>
                     <img id="video" src="{{ url_for('video_viewer') }}" style="max-width: 100%;">
 
                 </div>
-            </div>
-            <div class="col col-md-2">
-                <div class="row">
-                    <h2> Images</h2>
-                </div>
-                <br>
 
             </div>
+            <div class="navigation-menu">MIDDLE</div>
         </div>
     </div>
+
 </body>

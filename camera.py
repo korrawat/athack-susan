@@ -102,6 +102,13 @@ class VideoCamera(object):
     
     def __del__(self):
         self.cap.release()
+
+    def get_image(self):
+        ret, frame = self.cap.read()
+        if ret:
+            return frame
+        else:
+            return None
     
     def get_frame(self):
         ret, frame = self.cap.read()
