@@ -1,19 +1,34 @@
-from flask import Flask, render_template, Response, jsonify, request
+from flask import Flask, render_template, Response, jsonify, request, session
+from flask_session import Session
+
 import os
 import datetime
 
-from camera import VideoCamera
+from camera import VideoCamera, Camera
+from image_processor import ProcessedStream
+from processor_properties import ProcessorProperties
+
 import cv2
 from PIL import Image
 
 app = Flask(__name__)
 
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__)
+Session(app)
+
 video_camera = None
 global_frame = None
-counter = 1
 
 @app.route('/')
 def index():
+    if not "bg" in session:
+        session["bg"]=1
+    if not "ct" in session:
+        session["ct"] = 1
+    if not "change" in session:
+        session["change"] = False
+
     return render_template('landing.html')
 
 @app.route('/capture_status', methods=['POST'])
@@ -50,15 +65,63 @@ def record_status():
         video_camera.stop_record()
         return jsonify(result="stopped")
 
+@app.route('/tools', methods=['POST'])
+def tools():
+    global brightness
+    global contrast
+    global zoom
+
+    global change
+
+    json = request.get_json()
+
+    bg = json['bg']
+    ct = json['ct']
+    zm = json['zm']
+
+    # if bg:
+    #     brightness = bg
+    if ct:
+        session["contrast"] = float(ct)
+    # if zm:
+    #     zoom = zm
+
+    session["change"] = True
+
+    print('change', session["change"])
+
+    print('contrast', session["contrast"])
+
+    return jsonify(result="changed")
+
 def video_stream():
     global video_camera 
     global global_frame
 
+    global change
+
     if video_camera == None:
         video_camera = VideoCamera()
+
+    c = Camera()
+    p = ProcessorProperties() 
+    pstream = ProcessedStream(c, p)
+    
+    # p.brightness_factor.update(2)
+
+    print('change', session["change"])
+
+    if session["change"]:
+        ct = session["contrast"]
+        print(ct)
+        p.contrast_factor.update(ct)
+        # session["change"] = False
         
     while True:
-        frame = video_camera.get_frame()
+        # frame = video_camera.get_frame()
+        frame_original, frame_processed = pstream.read()
+        ret, jpeg = cv2.imencode('.jpg', frame_processed)
+        frame = jpeg.tobytes()
 
         if frame != None:
             global_frame = frame
